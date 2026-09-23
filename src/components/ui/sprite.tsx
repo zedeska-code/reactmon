@@ -12,7 +12,7 @@ export default async function Sprite({
 }) {
   const pokemon = await pokemonInfo(name);
   if (!pokemon) {
-    return;
+    return <div>Sprite not found !</div>;
   }
   return (
     <div>
