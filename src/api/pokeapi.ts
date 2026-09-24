@@ -6,6 +6,7 @@ import { Pokemon, PokemonDetails } from "@/types/types";
 // Get the list of every pokemon
 export default async function allPokemon(
   offset: number = 0,
+  query?: string | void,
 ): Promise<Pokemon[]> {
   const url = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=" + offset;
   try {
@@ -18,7 +19,14 @@ export default async function allPokemon(
     if (!Array.isArray(result)) {
       throw new Error("unexpected data shape");
     }
-    return result as Pokemon[];
+    if (!query) {
+      return result as Pokemon[];
+    } else {
+      const search = (query: string) => {
+        return result.filter(name === query);
+      };
+      return search as Pokemon[];
+    }
   } catch (error) {
     console.error((error as Error).message);
     return [];

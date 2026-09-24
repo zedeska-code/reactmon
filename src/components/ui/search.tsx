@@ -1,5 +1,19 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+export default function Search({ placeholder }: { placeholder: string }) {
+  const handleChange = (e) => {
+    const query = e.target.value;
 
-export default function Search({ placeholder }: { placeholder: string }) {}
+  };
+  return (
+    <div>
+      <label htmlFor="filter"></label>
+      <input
+        type="text"
+        name="search"
+        placeholder={placeholder}
+        onChange={handleChange}
+      />
+    </div>
+  );
+}
