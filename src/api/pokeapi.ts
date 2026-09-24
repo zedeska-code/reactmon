@@ -1,22 +1,33 @@
 // Library of functions reaching the pokeapi API
 //
+
+import { Pokemon, PokemonDetails } from "@/types/types";
+
 // Get the list of every pokemon
-export default async function allPokemon(offset: number = 0) {
-  const url = "https://pokeapi.co/api/v2/pokemon?limit=10&offset=" + offset;
+export default async function allPokemon(
+  offset: number = 0,
+): Promise<Pokemon[]> {
+  const url = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=" + offset;
   try {
     const response = await fetch(url, { method: "GET" });
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
-    const result = await response.json();
-    return result.results;
+    const data = await response.json();
+    const result: unknown = data.results;
+    if (!Array.isArray(result)) {
+      throw new Error("unexpected data shape");
+    }
+    return result as Pokemon[];
   } catch (error) {
     console.error((error as Error).message);
     return [];
   }
 }
 // Get the info of one single pokemon
-export async function pokemonInfo(name: string) {
+export async function pokemonInfo(
+  name: string,
+): Promise<PokemonDetails | null> {
   const url = "https://pokeapi.co/api/v2/pokemon/" + name;
   try {
     const response = await fetch(url, { method: "GET" });
@@ -27,7 +38,7 @@ export async function pokemonInfo(name: string) {
     return result;
   } catch (error) {
     console.error((error as Error).message);
-    return [];
+    return null;
   }
 }
 // Get the type of a single pokemon
