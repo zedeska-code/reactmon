@@ -25,10 +25,12 @@ export default function PokeRow({ pokemon }: { pokemon: Pokemon }) {
       </tr>
     );
   return (
-    <tr>
-      <td>{details.id}</td>
-      <td>
-        <Link href={`/pokemon/${pokemon.name}`} className="bg-red-700">
+    <tr className="hover:bg-blue-200 transition">
+      <td className="border text-center">
+        <Link href={`/pokemon/${pokemon.name}`}>#{details.id}</Link>
+      </td>
+      <td className="border ">
+        <Link href={`/pokemon/${pokemon.name}`}>
           <Image
             src={details.sprites.front_default}
             alt={pokemon.name}
@@ -37,10 +39,16 @@ export default function PokeRow({ pokemon }: { pokemon: Pokemon }) {
           />
         </Link>
       </td>
-      <td>
+      <td className="border">
         <Link href={`/pokemon/${pokemon.name}`}>{pokemon.name}</Link>
       </td>
-      <td>{details.types.map((t) => t.type.name).join(", ")}</td>
+      <td className="border">
+        <Link href={`/pokemon/${pokemon.name}`}>
+          {details.types.map((t) => (
+            <div key={t.type.name}>{t.type.name}</div>
+          ))}
+        </Link>
+      </td>
     </tr>
   );
 }

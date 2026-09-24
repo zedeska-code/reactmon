@@ -11,7 +11,12 @@ export default async function Page({
     <div>
       <InfoCard name={name} />
       <div>
-        <Link href={"/"}>retour</Link>
+        <Link
+          href={"/"}
+          className="border rounded-2xl m-5 p-2 hover:bg-amber-100"
+        >
+          retour
+        </Link>
       </div>
     </div>
   );
