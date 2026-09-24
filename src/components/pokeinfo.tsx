@@ -1,4 +1,4 @@
-import { pokemonInfo } from "@/app/pokeapi";
+import { pokemonInfo } from "@/api/pokeapi";
 import Image from "next/image";
 
 export default async function InfoCard({ name }: { name: string }) {
