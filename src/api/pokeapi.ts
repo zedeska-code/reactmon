@@ -1,56 +1,48 @@
+"use server";
 // Library of functions reaching the pokeapi API
-//
-
-import { Pokemon, PokemonDetails } from "@/types/types";
+import { cacheLife } from "next/cache";
+import { Pokemon, PokemonDetails, PokemonType } from "@/types/types";
 
 // Get the list of every pokemon
-export default async function allPokemon(): Promise<Pokemon[]> {
+export default async function allPokemon(): Promise<Pokemon[] | void> {
+  "use cache";
+  cacheLife("minutes");
   const url = "https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0";
-  try {
-    const response = await fetch(url, { method: "GET" });
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-    const data = await response.json();
-    const result: unknown = data.results;
-    if (!Array.isArray(result)) {
-      throw new Error("unexpected data shape");
-    }
-    return result as Pokemon[];
-  } catch (error) {
-    console.error((error as Error).message);
-    return [];
+  const response = await fetch(url, { method: "GET" });
+  const json = await response.json();
+  const results: unknown = json.results;
+
+  if (!response.ok) {
+    console.log(`Response status: ${response.status}`);
   }
+  if (!Array.isArray(results)) {
+    return console.log("unexpected data shape");
+  }
+  return results as Pokemon[];
 }
 // Get the info of one single pokemon
 export async function pokemonInfo(
   name: string,
-): Promise<PokemonDetails | null> {
+): Promise<PokemonDetails | void> {
+  "use cache";
+  cacheLife("minutes");
   const url = "https://pokeapi.co/api/v2/pokemon/" + name;
-  try {
-    const response = await fetch(url, { method: "GET" });
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error((error as Error).message);
-    return null;
+  const response = await fetch(url, { method: "GET" });
+  const json = await response.json();
+  if (!response.ok) {
+    console.log(`Response status: ${response.status}`);
   }
+  return json;
 }
 // Get the type of a single pokemon
-export async function pokemonType(name: string) {
+export async function pokemonType(name: string): Promise<PokemonType | void> {
+  "use cache";
+  cacheLife("minutes");
   const url = "https://pokeapi.co/api/v2/pokemon/" + name;
-  try {
-    const response = await fetch(url, { method: "GET" });
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
-    const result = await response.json();
-    return result.types;
-  } catch (error) {
-    console.error((error as Error).message);
-    return [];
+  const response = await fetch(url, { method: "GET" });
+  const json = await response.json();
+  if (!response.ok) {
+    console.log(`Response status: ${response.status}`);
   }
+  return json.types;
 }

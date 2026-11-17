@@ -1,5 +1,6 @@
-import InfoCard from "@/components/pokeinfo";
-import Link from "next/link";
+import PokeDetails from "@/components/pokeDetails";
+
+export const instant = false;
 
 export default async function Page({
   params,
@@ -7,17 +8,5 @@ export default async function Page({
   params: Promise<{ name: string }>;
 }) {
   const { name } = await params;
-  return (
-    <div>
-      <InfoCard name={name} />
-      <div>
-        <Link
-          href={"/"}
-          className="border rounded-2xl m-5 p-2 hover:bg-amber-100"
-        >
-          retour
-        </Link>
-      </div>
-    </div>
-  );
+  return <PokeDetails name={name} />;
 }

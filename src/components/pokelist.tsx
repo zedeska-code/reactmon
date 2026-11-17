@@ -2,7 +2,8 @@
 import allPokemon from "@/api/pokeapi";
 import { useLoadMore } from "@/hooks/useLoadMore";
 import PokeRow from "./pokerow";
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { Loading } from "./ui/loading";
 
 export default function Pokelist() {
   const [query, setQuery] = useState("");
@@ -33,7 +34,9 @@ export default function Pokelist() {
         </thead>
         <tbody>
           {pokemons.map((pokemon) => (
-            <PokeRow key={pokemon.name} pokemon={pokemon} />
+            <Suspense key={pokemon.name} fallback={<Loading />}>
+              <PokeRow pokemon={pokemon} />
+            </Suspense>
           ))}
         </tbody>
       </table>
