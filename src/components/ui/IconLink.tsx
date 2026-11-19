@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function IconLink({
   Icon,
-  size = "7xl",
+  size = "text-7xl",
   className,
   href,
 }: {
@@ -13,7 +13,7 @@ export default function IconLink({
   href: string;
 }) {
   return (
-    <Link href={{ href }} className={`w-fit text-${size}`}>
+    <Link href={href} className={`w-fit ${size}`}>
       <Icon
         fontSize="inherit"
         className={`rounded-3xl aspect-square w-fit bg-secondary text-on-secondary shadow-md shadow-shadow ${className}`}

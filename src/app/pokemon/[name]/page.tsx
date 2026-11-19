@@ -1,3 +1,4 @@
+import { pokemonInfo } from "@/api/pokeapi";
 import PokeDetails from "@/components/pokeDetails";
 
 export const instant = false;
@@ -8,5 +9,6 @@ export default async function Page({
   params: Promise<{ name: string }>;
 }) {
   const { name } = await params;
-  return <PokeDetails name={name} />;
+  const pokemon = await pokemonInfo(name);
+  return <PokeDetails pokemon={pokemon} />;
 }

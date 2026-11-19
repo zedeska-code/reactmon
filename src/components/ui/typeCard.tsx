@@ -1,14 +1,17 @@
 import { PokemonDetails, PokemonType } from "@/types/types";
+import { typeBadgeColor } from "./typeColor";
 
-export default function TypeCard({ details }: { details: PokemonDetails }) {
+export default function TypeCard({ pokemon }: { pokemon: PokemonDetails }) {
   return (
-    <section className="rounded-4xl bg-secondary-container overflow-clip">
-      <h3 className="text-center bg-secondary text-on-secondary p-1 text-2xl uppercase font-bold">
-        types
-      </h3>
+    <section className="rounded-4xl bg-surface border border-line m-auto">
       <div className="flex gap-2 p-2">
-        {details.types.map((t: PokemonType) => (
-          <div key={t.type.name}>{t.type.name}</div>
+        {pokemon.types.map((t: PokemonType) => (
+          <div
+            key={t.type.name}
+            className={`${typeBadgeColor[t.type.name]} rounded-full border-2 px-3 text-xl`}
+          >
+            {t.type.name}
+          </div>
         ))}
       </div>
     </section>

@@ -1,25 +1,20 @@
-import { pokemonInfo } from "@/api/pokeapi";
 import InfoCard from "@/components/ui/pokemonCard";
-import { Loading } from "@/components/ui/loading";
 import { ArrowBackRounded } from "@mui/icons-material";
-import Link from "next/link";
-import { Suspense } from "react";
 import TypeCard from "./ui/typeCard";
 import IconLink from "./ui/IconLink";
+import { PokemonDetails } from "@/types/types";
 
-export default async function PokeDetails({ name }: { name: string }) {
-  const details = await pokemonInfo(name);
-  if (!details) {
-    return "Not found";
-  }
-
+export default function PokeDetails({ pokemon }: { pokemon: PokemonDetails }) {
   return (
-    <section>
-      <Suspense fallback={<Loading />}>
-        <InfoCard details={details} />
-        <TypeCard details={details} />
-      </Suspense>
-      <IconLink Icon={ArrowBackRounded} href="/" />
+    <section className="flex flex-col gap-3 m-5">
+      <InfoCard pokemon={pokemon} />
+      <TypeCard pokemon={pokemon} />
+      <IconLink
+        Icon={ArrowBackRounded}
+        href={"/"}
+        size="text-7xl"
+        className="bg-primary text-surface"
+      />
     </section>
   );
 }

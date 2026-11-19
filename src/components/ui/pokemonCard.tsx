@@ -1,33 +1,29 @@
 import { PokemonDetails } from "@/types/types";
 import Image from "next/image";
+import { typeBackgroundColor } from "./typeColor";
 
-export default function InfoCard({ details }: { details: PokemonDetails }) {
-  // const flattenDetails = (details:PokemonDetails) =>{
-  //   let result = {};
-  //   for (const i in details){
-  //     if (typeof details[i] === "object" && !Array.isArray(details[i]))
-  //      const temp = flattenObj(details[i]);
-  //      for (const j in temp) {
-  //        result[i + "." + j] = temp[j];
-  //      }
-  //   } else {
-  //     result[i] = obj[i];
-  //   }
-  //  return result
-  // };
+export default function InfoCard({ pokemon }: { pokemon: PokemonDetails }) {
+  const firstType = Array.from(pokemon.types.map((t) => `${t.type.name}`))[0];
   return (
-    <section className="flex flex-col justify-center items-center m-20 rounded-4xl aspect-square overflow-clip bg-primary-container text-on-primary-container">
-      <article className="flex gap-2 bg-primary w-full items-start p-1 justify-center text-on-primary">
-        <div className="">{details.id}</div>
-        <h2 className="uppercase font-bold text-2xl">{details.name}</h2>
+    <section
+      className={`${typeBackgroundColor[firstType]} text-foreground w-80 m-auto bg-surface border border-line flex flex-col rounded-4xl`}
+    >
+      <article className="m-3"></article>
+      <article className="m-2 flex justify-center items-center bg-background rounded-4xl">
+        <Image
+          /* prettier-ignore */
+          src={pokemon['sprites']['other']['official-artwork']['front_default']}
+          alt={pokemon.name}
+          width={200}
+          height={200}
+        />
       </article>
-      <Image
-        /* prettier-ignore */
-        src={details['sprites']['other']['official-artwork']['front_default']}
-        alt={details.name}
-        width={200}
-        height={200}
-      />
+      <article className="flex gap-1 justify-between items-center m-3">
+        <h2 className="uppercase font-bold text-3xl text-white mix-blend-exclusion">
+          {pokemon.name}
+        </h2>
+        <div className="font-bold text-xl">#{pokemon.id}</div>
+      </article>
     </section>
   );
 }

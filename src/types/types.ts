@@ -1,4 +1,4 @@
-export interface Pokemon {
+export interface Pokemons {
   name: string;
   url: string;
 }
@@ -22,4 +22,11 @@ export interface PokemonDetails {
     };
   };
   types: PokemonType[];
+}
+
+export interface PokemonSummary {
+  id: number;
+  name: string;
+  sprite: string;
+  types: string[];
 }
